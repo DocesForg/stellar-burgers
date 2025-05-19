@@ -1,3 +1,7 @@
+[data-cy="toppings"]:empty {
+  display: none;
+}
+
 .burger_constructor {
   width: 600px;
   color: #f2f2f3;
@@ -9,7 +13,7 @@
 .elements {
   min-height: 100px;
 
-  overflow-y: auto;
+  overflow-y: scroll;
   list-style-type: none;
   margin: 0;
   padding: 0;

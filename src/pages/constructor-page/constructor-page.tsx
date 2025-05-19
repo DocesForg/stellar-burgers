@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from '../../services/store';
-
+import { RootState, useSelector } from '../../services/store';
 import styles from './constructor-page.module.css';
-
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
-  const { isLoading } = useAppSelector((state) => state.ingredients);
-  const isIngredientsLoading = isLoading;
+  /** TODO: взять переменную из стора */
+  const isIngredientsLoading = useSelector(
+    (state: RootState) => state.ingredients.isLoading
+  );
 
   return (
     <>

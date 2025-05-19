@@ -20,7 +20,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`} data-cy='bun'>
+      <div className={`${styles.element} mb-4 mr-4`} data-cy='bun-top'>
         <ConstructorElement
           type='top'
           isLocked
@@ -32,34 +32,31 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsTop} ml-8 mb-4 mr-5 text text_type_main-default`}
-        data-cy='bun-constructor'
       >
         Выберите булки
       </div>
     )}
-    <ul className={styles.elements} data-cy='ingredients'>
-      {constructorItems.ingredients.length > 0 ? (
-        constructorItems.ingredients.map(
-          (item: TConstructorIngredient, index: number) => (
-            <BurgerConstructorElement
-              ingredient={item}
-              index={index}
-              totalItems={constructorItems.ingredients.length}
-              key={item.id}
-            />
-          )
+    <ul className={styles.elements} data-cy='toppings'>
+      {constructorItems.ingredients.map(
+        (item: TConstructorIngredient, index: number) => (
+          <BurgerConstructorElement
+            ingredient={item}
+            index={index}
+            totalItems={constructorItems.ingredients.length}
+            key={item.id}
+          />
         )
-      ) : (
-        <div
-          className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}
-          data-cy='ingredients-constructor'
-        >
-          Выберите начинку
-        </div>
       )}
     </ul>
+    {constructorItems.ingredients.length === 0 && (
+      <div
+        className={`${styles.noBuns} ml-8 mb-4 mr-5 text text_type_main-default`}
+      >
+        Выберите начинку
+      </div>
+    )}
     {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`} data-cy='bun'>
+      <div className={`${styles.element} mt-4 mr-4`} data-cy='bun-bot'>
         <ConstructorElement
           type='bottom'
           isLocked
@@ -71,7 +68,6 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
     ) : (
       <div
         className={`${styles.noBuns} ${styles.noBunsBottom} ml-8 mb-4 mr-5 text text_type_main-default`}
-        data-cy='bun-constructor'
       >
         Выберите булки
       </div>

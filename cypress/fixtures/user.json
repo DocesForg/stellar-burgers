@@ -1,9 +1,7 @@
 {
-  "user": {
-    "email": "testadmin@example.com",
-    "name": "test"
-  },
-  "accessToken": "exampleAccessToken",
-  "refreshToken": "exampleRefreshToken",
-  "success": true
+    "success": true,
+    "user": {
+        "email": "cypress25@test.com",
+        "name": "Doshic"
+    }
 }

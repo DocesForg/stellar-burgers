@@ -14,11 +14,6 @@
   margin: 0;
 }
 
-.orderNumber {
-  margin: 0;
-  text-align: center;
-}
-
 .img_wrap {
   width: 64px;
   height: 64px;
@@ -80,12 +75,8 @@
   margin-left: auto;
 }
 
-.title {
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 1.1;
-  text-align: center;
-  margin-top: 120px;
-  margin-bottom: 0;
-  font-family: 'Jet Brains Mono';
-}
+ .order_number {
+  position: relative;
+  top: -45px;
+  z-index: -1;
+} 

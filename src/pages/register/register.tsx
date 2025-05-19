@@ -1,42 +1,42 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
+import { useSelector, useDispatch } from '../../services/store';
+import { registerUser } from '../../services/thunk/user-thunk';
 import { TRegisterData } from '@api';
-import { useAppDispatch, useAppSelector } from '../../services/store';
-import { fetchLoginUser, fetchRegisterUser } from '../../slices/userSlice';
+import {
+  userDataSelector,
+  errorSelector
+} from '../../services/slices/user-slice';
 
 export const Register: FC = () => {
-  const [name, setName] = useState('');
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const error = useAppSelector((state) => state.user.error);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const user = useSelector(userDataSelector);
+  const error = useSelector(errorSelector);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const userData: TRegisterData = {
+    name: userName,
+    email,
+    password
+  };
+
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    const userData: TRegisterData = {
-      name,
-      email,
-      password
-    };
-    const resultAction = await dispatch(fetchRegisterUser(userData));
-
-    if (fetchRegisterUser.fulfilled.match(resultAction)) {
-      dispatch(
-        fetchLoginUser({ email: userData.email, password: userData.password })
-      );
-    }
+    dispatch(registerUser(userData));
   };
 
   return (
     <RegisterUI
-      errorText={error?.message}
+      errorText=''
       email={email}
-      userName={name}
+      userName={userName}
       password={password}
       setEmail={setEmail}
       setPassword={setPassword}
-      setUserName={setName}
+      setUserName={setUserName}
       handleSubmit={handleSubmit}
     />
   );

@@ -1,23 +1,18 @@
-import { Preloader } from '@ui';
 import { ProfileOrdersUI } from '@ui-pages';
+import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../services/store';
-import { fetchOrders } from '../../slices/orderSlice';
+import { useSelector, useDispatch } from '../../services/store';
+import { getUserOrders } from '../../services/thunk/order-thunk';
+import { userOrderSelector } from '../../services/slices/order-slice';
 
 export const ProfileOrders: FC = () => {
-  const { userOrders, userOrdersLoading } = useAppSelector(
-    (state) => state.order
-  );
+  /** TODO: взять переменную из стора */
+  const orders: TOrder[] = useSelector(userOrderSelector);
 
-  const dispatch = useAppDispatch();
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+    dispatch(getUserOrders());
+  }, []);
 
-  return userOrdersLoading ? (
-    <Preloader />
-  ) : (
-    <ProfileOrdersUI orders={userOrders} />
-  );
+  return <ProfileOrdersUI orders={orders} />;
 };

@@ -1,16 +1,6 @@
 .header {
   background-color: var(--background);
 }
-
-.link:focus,
-.link:active {
-  outline: none;
-}
-
-.link:focus-visible {
-  outline: none;
-}
-
 .menu {
   display: flex;
   align-items: center;
@@ -28,10 +18,13 @@
   display: flex;
   text-decoration: none;
   color: var(--text-inactive-color);
+  cursor: pointer;
 }
 
 .link_active {
   color: var(--text-primary-color);
+  text-decoration: none;
+  display: flex;
 }
 
 .link_position_last {
@@ -44,17 +37,4 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
-}
-
-.link {
-  text-decoration: none; /* Убираем стандартное подчеркивание */
-  border-bottom: none; /* На случай, если линия идёт от границы */
-}
-
-.link:focus,
-.link:active,
-.link:focus-visible {
-  outline: none;
-  border-bottom: none;
-  text-decoration: none;
 }

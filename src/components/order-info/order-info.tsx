@@ -1,24 +1,50 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo, useState, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useAppDispatch, useAppSelector } from '../../services/store';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { fetchOrderByNumber } from '../../slices/orderSlice';
-import { Modal } from '../modal';
+import { useSelector } from '../../services/store';
+import { getOrderByNumberApi } from '@api';
+import { useParams } from 'react-router-dom';
+import { ingredientsSelector } from '../../services/slices/ingredients-slice';
 
-export const OrderInfo: FC<{ title?: string }> = ({ title }) => {
+export const OrderInfo: FC = () => {
+  /** TODO: взять переменные orderData и ingredients из стора */
+  const [orderData, setOrderData] = useState({
+    createdAt: '',
+    ingredients: [''],
+    _id: '',
+    status: '',
+    name: '',
+    updatedAt: 'string',
+    number: 0
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const ingredients: TIngredient[] = useSelector(ingredientsSelector);
+
   const { number } = useParams<{ number: string }>();
-  const { ingredients } = useAppSelector((state) => state.ingredients);
-  const orderData = useAppSelector((state) => state.order.orderModalData);
-  const isLoading = useAppSelector((state) => state.order.isLoading);
-  const location = useLocation();
-  const isModalOpen = location.state?.background;
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchOrderByNumber(Number(number)));
-  }, [dispatch]);
+    if (!number) {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+
+    getOrderByNumberApi(Number(number))
+      .then((data) => {
+        if (data.orders && data.orders.length > 0) {
+          setOrderData(data.orders[0]);
+        }
+      })
+      .catch((err) => {
+        console.error('Неудалось получить номер заказа', err);
+      })
+
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [number]);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -62,17 +88,9 @@ export const OrderInfo: FC<{ title?: string }> = ({ title }) => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (isLoading || !orderInfo) {
     return <Preloader />;
   }
 
-  return isLoading ? (
-    <Preloader />
-  ) : (
-    <OrderInfoUI
-      orderInfo={orderInfo}
-      isModalOpen={!!isModalOpen}
-      title={title}
-    />
-  );
+  return <OrderInfoUI orderInfo={orderInfo} />;
 };
