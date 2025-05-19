@@ -29,6 +29,7 @@ export const DefaultIngredientDetails: Story = {
       image: '',
       image_large: '',
       image_mobile: ''
-    }
+    },
+    onImageLoad: () => {}
   }
 };

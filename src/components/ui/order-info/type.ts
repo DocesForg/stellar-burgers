@@ -2,6 +2,8 @@ import { TIngredient } from '@utils-types';
 
 export type OrderInfoUIProps = {
   orderInfo: TOrderInfo;
+  isModalOpen?: boolean;
+  title?: string;
 };
 
 type TOrderInfo = {

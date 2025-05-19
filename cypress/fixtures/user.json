@@ -1,0 +1,9 @@
+{
+  "user": {
+    "email": "testadmin@example.com",
+    "name": "test"
+  },
+  "accessToken": "exampleAccessToken",
+  "refreshToken": "exampleRefreshToken",
+  "success": true
+}

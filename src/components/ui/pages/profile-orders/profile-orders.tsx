@@ -7,6 +7,7 @@ import { ProfileMenu, OrdersList } from '@components';
 
 export const ProfileOrdersUI: FC<ProfileOrdersUIProps> = ({ orders }) => (
   <main className={`${styles.main}`}>
+    {/* {isModalOpen ? '' : <h2 className={styles.title}>{title}</h2>} */}
     <div className={`mt-30 mr-15 ${styles.menu}`}>
       <ProfileMenu />
     </div>
